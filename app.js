@@ -1,4 +1,3 @@
-//O principal objetivo deste desafio é fortalecer suas habilidades em lógica de programação. Aqui você deverá desenvolver a lógica para resolver o problema.
 function showToast(message) {
     const toastContainer = document.getElementById('toast-container');
     const toast = document.createElement('div');
@@ -15,7 +14,20 @@ function atualizarLista() {
     listaAmigos.innerHTML = '';
     amigos.forEach((amigo, index) => {
         const li = document.createElement('li');
-        li.textContent = amigo;
+        const span = document.createElement('span');
+        span.textContent = amigo;
+        li.appendChild(span);
+
+        const btnEditar = document.createElement('button');
+        btnEditar.textContent = '✏️';
+        btnEditar.onclick = () => editarAmigo(index);
+
+        const btnRemover = document.createElement('button');
+        btnRemover.textContent = '❌';
+        btnRemover.onclick = () => removerAmigo(index);
+
+        li.appendChild(btnEditar);
+        li.appendChild(btnRemover);
         listaAmigos.appendChild(li);
     });
     localStorage.setItem('amigos', JSON.stringify(amigos));
@@ -32,6 +44,23 @@ function adicionarAmigo() {
     inputAmigo.value = '';
     atualizarLista();
     showToast('Amigo adicionado!');
+}
+
+function editarAmigo(index) {
+    const novoNome = prompt('Editar nome:', amigos[index]);
+    if (novoNome && novoNome.trim() !== '' && !amigos.includes(novoNome.trim())) {
+        amigos[index] = novoNome.trim();
+        atualizarLista();
+        showToast('Amigo editado com sucesso!');
+    } else {
+        showToast('Nome inválido ou já existe!');
+    }
+}
+
+function removerAmigo(index) {
+    amigos.splice(index, 1);
+    atualizarLista();
+    showToast('Amigo removido!');
 }
 
 function sortearAmigo() {
@@ -67,5 +96,67 @@ function sortearAmigo() {
         showToast('Sorteio realizado com sucesso!');
     }, 1500);
 }
+
+
+let indexToEdit = null; // Para armazenar o índice do amigo que será editado
+let indexToDelete = null; // Para armazenar o índice do amigo que será excluído
+
+function mostrarModal(modalId) {
+    document.getElementById(modalId).style.display = 'flex';
+}
+
+function fecharModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+function editarAmigo(index) {
+    indexToEdit = index;
+    document.getElementById('editName').value = amigos[index];
+    mostrarModal('editModal');
+}
+
+function salvarEdicao() {
+    const novoNome = document.getElementById('editName').value.trim();
+    if (novoNome && novoNome !== amigos[indexToEdit] && !amigos.includes(novoNome)) {
+        amigos[indexToEdit] = novoNome;
+        atualizarLista();
+        showToast('Amigo editado com sucesso!');
+        fecharModal('editModal');
+    } else {
+        showToast('Nome inválido ou já existe!');
+    }
+}
+
+function removerAmigo(index) {
+    indexToDelete = index;
+    mostrarModal('confirmModal');
+}
+
+function confirmarExclusao() {
+    amigos.splice(indexToDelete, 1);
+    atualizarLista();
+    showToast('Amigo removido!');
+    fecharModal('confirmModal');
+}
+
+
+amigos.forEach((amigo, index) => {
+    const li = document.createElement('li');
+    const span = document.createElement('span');
+    span.textContent = amigo;
+    li.appendChild(span);
+
+    const btnEditar = document.createElement('button');
+    btnEditar.textContent = '✏️';
+    btnEditar.onclick = () => editarAmigo(index); // Abre o modal de edição
+
+    const btnRemover = document.createElement('button');
+    btnRemover.textContent = '❌';
+    btnRemover.onclick = () => removerAmigo(index); // Abre o modal de confirmação de exclusão
+
+    li.appendChild(btnEditar);
+    li.appendChild(btnRemover);
+    listaAmigos.appendChild(li);
+});
 
 document.addEventListener('DOMContentLoaded', atualizarLista);

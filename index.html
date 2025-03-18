@@ -34,6 +34,32 @@
         </section>
     </main>
 
+    <!-- Modal de edição -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <h2>Editar Amigo</h2>
+            <input type="text" id="editName" placeholder="Digite o novo nome">
+            <div class="modal-buttons">
+                <button onclick="salvarEdicao()">Salvar</button>
+                <button onclick="fecharModal('editModal')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmação de exclusão -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h2>Tem certeza que deseja excluir?</h2>
+            <div class="modal-buttons">
+                <button onclick="confirmarExclusao()">Sim</button>
+                <button onclick="fecharModal('confirmModal')">Cancelar</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+
     <script src="app.js" defer></script>
 </body>
 </html>
