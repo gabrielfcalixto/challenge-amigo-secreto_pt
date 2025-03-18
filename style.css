@@ -6,6 +6,8 @@
     --color-button-hover: #e55720;
     --color-text: #444444;
     --color-white: #FFFFFF;
+    --color-success: #05DF05;
+    --color-danger: #FF4C4C;
 }
 
 /* Estilos gerais */
@@ -21,6 +23,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Inter", sans-serif;
 }
 
 .main-content {
@@ -50,6 +53,7 @@ body {
     align-items: center;
     padding: 20px;
     width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Títulos */
@@ -62,7 +66,7 @@ body {
 }
 
 .section-title {
-    font-family: "Inter", serif;
+    font-family: "Inter", sans-serif;
     font-size: 36px;
     font-weight: 700;
     color: var(--color-primary);
@@ -88,23 +92,13 @@ body {
 }
 
 .button-container {
-    width: 300px;
+    display: flex;
     justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-/* Estilos de entrada de texto */
-.input-title {
-    flex: 1;
-    padding: 10px 15px;
-    font-size: 16px;
-    border: 2px solid #333;
-    border-right: none;
-    border-radius: 25px 0 0 25px;
-    font-family: "Merriweather", serif;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Estilos de botão */
+/* Botões */
 button {
     padding: 15px 30px;
     font-family: "Inter", sans-serif;
@@ -113,6 +107,7 @@ button {
     border-radius: 25px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     cursor: pointer;
+    transition: background-color 0.2s, transform 0.1s;
 }
 
 .button-add {
@@ -123,30 +118,12 @@ button {
 
 .button-add:hover {
     background-color: #a1a1a1;
+    transform: scale(1.05);
 }
 
-/* Listas */
-ul {
-    list-style-type: none;
-    color: var(--color-text);
-    font-family: "Inter", sans-serif;
-    font-size: 18px;
-    margin: 20px 0;
-}
-
-.result-list {
-    margin-top: 15px;
-    color: #05DF05;
-    font-size: 22px;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Botão de sortear título */
 .button-draw {
     display: flex;
     align-items: center;
-    width: 100%;
     padding: 10px 40px;
     color: var(--color-white);
     background-color: var(--color-button);
@@ -154,9 +131,92 @@ ul {
 }
 
 .button-draw img {
-    margin-right: 40px;
+    margin-right: 10px;
 }
 
 .button-draw:hover {
     background-color: var(--color-button-hover);
+    transform: scale(1.05);
+}
+
+/* Listas */
+ul {
+    list-style-type: none;
+    color: var(--color-text);
+    font-size: 18px;
+    margin: 20px 0;
+    padding: 0 15px;
+    max-height: 150px;
+    overflow-y: auto;
+    width: 100%;
+    max-width: 600px;
+    background: var(--color-white);
+    border: 1px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+li {
+    padding: 8px 15px;
+    border-bottom: 1px solid var(--color-tertiary);
+}
+
+li:last-child {
+    border-bottom: none;
+}
+
+/* Resultados */
+.result-list {
+    margin-top: 15px;
+    color: var(--color-success);
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+}
+
+
+#toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+.toast {
+    background: #4B69FD;
+    color: white;
+    padding: 15px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.5s, fadeOut 0.5s 3s forwards;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+.shake {
+    animation: shake 0.5s;
+}
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25%, 75% { transform: translateX(-5px); }
+    50% { transform: translateX(5px); }
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    .main-title {
+        font-size: 32px;
+    }
+    .section-title {
+        font-size: 24px;
+    }
+    button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
 }
