@@ -69,9 +69,14 @@ function sortearAmigo() {
         return;
     }
 
+    // Mostrar o modal de carregamento
+    mostrarModal('loadingModal');
+
+    // Limpar o resultado anterior
     const resultado = document.getElementById('resultado');
     resultado.innerHTML = '';
 
+    // Adicionar uma mensagem animada de "Sorteando..."
     for (let i = 0; i < amigos.length; i++) {
         const li = document.createElement('li');
         li.textContent = 'Sorteando...';
@@ -79,13 +84,18 @@ function sortearAmigo() {
         resultado.appendChild(li);
     }
 
+    // Fazer o sorteio com atraso para mostrar o modal de carregamento
     setTimeout(() => {
         const sorteio = [...amigos];
         for (let i = sorteio.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [sorteio[i], sorteio[j]] = [sorteio[j], sorteio[i]];
         }
+
+        // Limpar a tela de sorteio
         resultado.innerHTML = '';
+
+        // Exibir os amigos sorteados
         for (let i = 0; i < sorteio.length; i++) {
             const amigo = sorteio[i];
             const amigoSecreto = sorteio[(i + 1) % sorteio.length];
@@ -93,8 +103,13 @@ function sortearAmigo() {
             li.textContent = `${amigo} → ${amigoSecreto}`;
             resultado.appendChild(li);
         }
+
+        // Fechar o modal de carregamento
+        fecharModal('loadingModal');
+
+        // Mostrar a mensagem de sucesso
         showToast('Sorteio realizado com sucesso!');
-    }, 1500);
+    }, 2500); // O sorteio leva 2.5 segundos para ser realizado
 }
 
 
